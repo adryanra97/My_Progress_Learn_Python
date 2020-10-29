@@ -1,0 +1,11 @@
+import urllib.request,urllib.parse
+from bs4 import BeautifulSoup as bf
+Word=input('Input Search Word :')
+link='https://en.wikipedia.org/wiki/Special:Search?search='+urllib.parse.quote_plus(Word)+'&go=Go&ns0=1'
+html=urllib.request.urlopen(link)
+text=bf(html)
+attr={'rel':'canonical'}
+text=text.find_all('link',attr)
+for a in text:
+    a=str(a).split('"')
+    print('Link Wikipedia :',a[1])
