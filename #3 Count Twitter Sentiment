@@ -1,0 +1,58 @@
+#Here is the code in one of assignment in mooc, i modified a little so it cant use directly on that website to keep the cheater away :D
+#mooc is very good, i learn lot of basic that i didnt understand before
+#i used to learn from project guide or course with advance but, now i understand the basic is the most important
+#i try code this for 1 hour, but its fun
+#my first long code of python
+
+
+#function to remove character
+def clear(word):
+    clear_chars = [".", "!", ":", ";", '#', '@']
+    for x in clear_chars:
+        word=word.replace(x,'')
+    return word
+    
+#function count positive word
+def pos(lines):
+    count=0
+    words=lines.lower().split(' ')
+    for word in words:
+        word=clear(word) 
+        if word in pfile:
+            count+=1
+    return count
+
+#function count negative word
+def neg(lines):
+    count=0
+    words=lines.lower().split(' ')
+    for word in words:
+        word=clear(word) 
+        if word in nfile:
+            count+=1
+    return count
+
+#import positive sentiment
+pfile = []
+with open("file-name.txt") as pos_f:
+    for line in pos_f:
+        if line[0] != ';' and line[0] != '\n':
+            pfile.append(line.strip())
+
+#import negative sentiment
+nfile = []
+with open("negative_words.txt") as neg_f:
+    for line in neg_f:
+        if line[0] != ';' and line[0] != '\n':
+            nfile.append(line.strip())
+#the time is here :D
+with open('result.csv','w') as wr:
+    wr.write('Number of Retweets, Number of Replies, Positive Score, Negative Score, Net Score')
+    wr.write('\n')
+    with open('tweet_data.csv','r') as pr:
+        lines=pr.readlines()[1:]
+        for line in lines:
+            segment=line.strip().split(',')
+            wr.write('{},{},{},{},{}'.format(segment[1],segment[2],get_pos(segment[0]),get_neg(segment[0]),(get_pos(segment[0])-get_neg(segment[0]))))
+            wr.write('\n')
+        
